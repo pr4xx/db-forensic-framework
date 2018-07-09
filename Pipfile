@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 click = "*"
+sqlalchemy = "*"
+changanya = "*"
+pymysql = "*"
 
 [dev-packages]
 
