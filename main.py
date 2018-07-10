@@ -11,14 +11,18 @@ def cli():
     pass
 
 
-@cli.command(name='list:connections')
+@cli.command(name='connection:list')
 def list_connections():
+    """ Lists all connections. """
+
     core.connection_manager.print_connections()
 
 
-@cli.command(name='hash:connection')
+@cli.command(name='connection:hash')
 @click.argument('name')
 def hash_connection(name):
+    """ Returns a hash for a given connection name. """
+
     print(core.database_identifier.get_hash(name))
 
 
