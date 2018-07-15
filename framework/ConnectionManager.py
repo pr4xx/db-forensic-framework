@@ -1,5 +1,5 @@
 import configparser
-from Framework.Connection import Connection
+from framework.Connection import Connection
 
 
 class ConnectionManager:
@@ -10,10 +10,10 @@ class ConnectionManager:
         self.__load_connections()
 
     def __load_connections(self):
-        """ Reads and parses the connections.ini file. """
+        """ Reads and parses the Connectionfile file. """
 
         config = configparser.ConfigParser()
-        config.read('connections.ini')
+        config.read('Connectionfile')
         for section in config.sections():
             connection = Connection(section, dict(config.items(section)))
             self.connections.append(connection)
@@ -28,7 +28,11 @@ class ConnectionManager:
     def get_connection(self, name):
         """ Returns a connection object for a given name. """
 
-        return next(connection for connection in self.connections if connection.config['name'] == name)
+        for connection in self.connections:
+            if connection.config['name'] == name:
+                return connection
+
+        raise Exception('Unknown connection name!')
 
     def get_connection_string(self, name):
         """ Builds and returns a connection string for a given connection name. """
@@ -46,5 +50,5 @@ class ConnectionManager:
             file = config['file']
             return 'sqlite:///' + file
         else:
-            return 'unsupported'
+            raise Exception('Connection type not supported!')
 

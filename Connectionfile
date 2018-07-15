@@ -1,0 +1,15 @@
+[example]
+type = sqlite
+file = databases/example.sqlite
+
+[shopware]
+type = mysql
+host = 127.0.0.1
+port = 33060
+database = shopware
+username = homestead
+password = secret
+
+[messenger]
+type = sqlite
+file = databases/messenger.sqlite

@@ -1,0 +1,14 @@
+[general]
+title = example-plugin
+description = Example plugin for showing some framework functions.
+version = 0.1.0
+
+[target]
+name = example-app
+min_version = 1.0.0
+max_version = 1.8.5
+sim_hash = 437378939070457518
+
+[author]
+name = Nico Zimmermann
+email = nico.zimmermann94@gmail.com

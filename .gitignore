@@ -1,6 +1,6 @@
 /.idea
 /.vscode
-/databases/*
-!/databases/readme.md
+/Databases/*
+!/Databases/readme.md
 *.pyc
 *.pyo
