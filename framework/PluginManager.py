@@ -16,7 +16,8 @@ class PluginManager:
         for directory in os.listdir('plugins'):
             path = 'plugins/' + directory
             plugin_file = path + '/Pluginfile'
-            if os.path.isfile(plugin_file):
+            main_file = path + '/main.py'
+            if os.path.isfile(plugin_file) and os.path.isfile(main_file):
                 config = configparser.ConfigParser()
                 config.read(plugin_file)
                 plugin = Plugin(directory, path, {s: dict(config.items(s)) for s in config.sections()})
