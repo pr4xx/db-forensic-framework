@@ -2,6 +2,7 @@
 title = example-plugin
 description = Example plugin for showing some framework functions.
 version = 0.1.0
+requires = 0.1.0
 
 [target]
 name = example-app
