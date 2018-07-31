@@ -52,3 +52,15 @@ class ConnectionManager:
         else:
             raise Exception('Connection type not supported!')
 
+    def bind_db(self, db, name):
+        """ Binds a pony database for a given connection name. """
+        config = self.get_connection(name).config
+        connection_type = config['type']
+        if connection_type == 'mysql':
+            pass
+        elif connection_type == 'sqlite':
+            file = config['file']
+            db.bind(provider='sqlite', filename='../' + file)
+        else:
+            raise Exception('Connection type not supported!')
+

@@ -1,4 +1,15 @@
 import click
+from pony.orm import *
+from framework.Core import Core
+
+# Entity definitions
+
+
+class Folder(Core.instance.db.Entity):
+    _table_ = "folders"
+    thread_key = PrimaryKey(str)
+
+# Command definitions
 
 
 @click.group()
@@ -7,11 +18,14 @@ def cli(ctx):
     """ Sample plugin description. """
     pass
 
+
 @cli.command()
 @click.pass_context
+@db_session
 def sync(ctx):
-    print(1)
-    print(ctx.obj)
+    Folder.select().show()
+    pass
+
 
 @cli.command()
 @click.pass_context

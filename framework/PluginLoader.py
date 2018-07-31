@@ -1,26 +1,22 @@
-import os
-
 import click
+
+from framework.Core import Core
 
 
 class PluginLoader(click.MultiCommand):
 
-    def __init__(self, core):
-        super().__init__()
-        self.core = core
-
     def list_commands(self, ctx):
         commands = []
-        for plugin in self.core.plugin_manager.plugins:
+        for plugin in Core.instance.plugin_manager.plugins:
             commands.append('plugin:run:' + plugin.config['name'])
 
         return commands
 
     def get_command(self, ctx, name):
         ns = {}
-        ctx.obj = self.core
+        ctx.obj = Core.instance
         plugin_name = name.split(':')[2]
-        plugin = self.core.plugin_manager.get_plugin(plugin_name)
+        plugin = Core.instance.plugin_manager.get_plugin(plugin_name)
         fn = plugin.config['path'] + '/main.py'
         with open(fn) as f:
             code = compile(f.read(), fn, 'exec')

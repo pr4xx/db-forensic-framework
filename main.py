@@ -2,6 +2,7 @@ import configparser
 import logging
 import click
 from framework.Core import Core
+from framework.PluginLoader import PluginLoader
 
 # Bootstrap the application
 core = Core()
@@ -16,6 +17,13 @@ debug = config['general'].getboolean('debug')
 @click.group()
 def framework():
     pass
+
+
+@click.group(cls=PluginLoader)
+@click.pass_context
+@click.option('--connection', help='Name of connection')
+def plugins(ctx, connection):
+    core.init(connection)
 
 
 @framework.command(name='connection:list')
@@ -66,7 +74,7 @@ def show_plugin(name):
 
 # Run the application
 try:
-    cli = click.CommandCollection(sources=[framework, core.plugin_loader])
+    cli = click.CommandCollection(sources=[framework, plugins(obj=core)])
     cli()
     exit(0)
 except Exception as exception:
