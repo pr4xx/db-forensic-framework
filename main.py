@@ -15,19 +15,20 @@ debug = config['general'].getboolean('debug')
 
 # Register commands and plugins
 @click.group()
-def framework():
+@click.pass_context
+def framework(ctx, connection):
     pass
 
 
 @click.group(cls=PluginLoader)
 @click.pass_context
-@click.option('--connection', help='Name of connection')
-def plugins(ctx, connection):
-    core.init(connection)
+def plugins(ctx):
+    pass
 
 
 @framework.command(name='connection:list')
-def list_connections():
+@click.pass_context
+def list_connections(ctx):
     """ Lists all connections. """
 
     core.connection_manager.print_connections()
@@ -72,10 +73,16 @@ def show_plugin(name):
     print(core.plugin_manager.get_plugin(name))
 
 
+@click.command(cls=click.CommandCollection, sources=[framework, plugins])
+@click.option('--connection', help='Name of connection')
+@click.pass_context
+def cli(ctx, connection):
+    core.init(connection)
+
+
 # Run the application
 try:
-    cli = click.CommandCollection(sources=[framework, plugins(obj=core)])
-    cli()
+    cli(obj={})
     exit(0)
 except Exception as exception:
     if debug:

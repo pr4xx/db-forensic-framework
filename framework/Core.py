@@ -17,6 +17,10 @@ class Core:
         Core.instance = self
 
     def init(self, connection_name):
-        self.connection = self.connection_manager.get_connection(connection_name)
-        self.connection_manager.bind_db(self.db, connection_name)
-        self.db.generate_mapping()
+        if connection_name is not None:
+            self.connection = self.connection_manager.get_connection(connection_name)
+            self.connection_manager.bind_db(self.db, connection_name)
+            self.db.generate_mapping()
+
+    def result(self, result):
+        pass
