@@ -75,9 +75,11 @@ def show_plugin(name):
 
 @click.command(cls=click.CommandCollection, sources=[framework, plugins])
 @click.option('--connection', help='Name of connection')
+@click.option('--export', help='Format of output file')
+@click.option('--output', help='Path of output file')
 @click.pass_context
-def cli(ctx, connection):
-    core.init(connection)
+def cli(ctx, connection, export, output):
+    core.init(connection, export, output)
 
 
 # Run the application

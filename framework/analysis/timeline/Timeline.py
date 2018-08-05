@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 from framework.analysis.Result import Result
 
@@ -6,6 +7,7 @@ class Timeline(Result):
 
     def __init__(self, title):
         self.title = title
+        self.created_at = datetime.now()
         self.elements = []
 
     def add(self, element):
@@ -15,6 +17,7 @@ class Timeline(Result):
         result = {
             "type": "timeline",
             "title": self.title,
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "elements": []
         }
         for element in self.elements:

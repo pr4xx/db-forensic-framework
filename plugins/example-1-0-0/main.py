@@ -1,5 +1,6 @@
 import click
 from datetime import datetime
+from datetime import timedelta
 from pony.orm import *
 from framework.Core import Core
 from framework.analysis.timeline.Timeline import Timeline
@@ -30,7 +31,9 @@ def sync(ctx):
     timeline.add(TimelineElement(datetime.now(), "header 1", "content 1"))
     timeline.add(TimelineElement(datetime.now(), "header 2", "content 2"))
     timeline.add(TimelineElement(datetime.now(), "header 3", "content 3"))
-    print(timeline.to_json())
+    timeline.add(TimelineElement(datetime.now() + timedelta(days=1), "header 3", "content 3"))
+    timeline.add(TimelineElement(datetime.now() + timedelta(days=2), "header 3", "content 3"))
+    Core.instance.render(timeline)
 
 
 @cli.command()
