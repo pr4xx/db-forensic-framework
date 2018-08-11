@@ -8,6 +8,9 @@ from framework.analysis.timeline.html.TimelineHtml import TimelineHtml
 from framework.analysis.chat import Chat
 from framework.analysis.chat.excel.ChatExcel import ChatExcel
 from framework.analysis.chat.html.ChatHtml import ChatHtml
+from framework.analysis.purchases import Purchases
+from framework.analysis.purchases.excel.PurchasesExcel import PurchasesExcel
+from framework.analysis.purchases.html.PurchasesHtml import PurchasesHtml
 
 
 class Core:
@@ -52,5 +55,10 @@ class Core:
                 exporter = ChatHtml()
             if self.export == 'excel':
                 exporter = ChatExcel()
+        if isinstance(result, Purchases.Purchases):
+            if self.export == 'html':
+                exporter = PurchasesHtml()
+            if self.export == 'excel':
+                exporter = PurchasesExcel()
         exporter.to_file(self.output, result_json)
         print("Written " + self.output)

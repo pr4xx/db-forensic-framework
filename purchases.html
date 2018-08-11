@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forensic Results</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"
+          id="bootstrap-css">
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+</head>
+<body>
+
+<div class="container" style="" id="app">
+
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+
+            <h2>{{ result.title }}</h2>
+            <b>Created {{ result.created_at }}</b>
+
+            <div style="height: 10px;"></div>
+
+            <div class="panel panel-default" v-for="card in result.shopping_cards">
+
+                <div class="panel-heading">
+                    Shopping Card #{{ card.id }}
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Invoice Address:</b><br>
+                            {{ card.invoice_address }}
+                        </div>
+                         <div class="col-md-6">
+                            <b>Shipping Address:</b><br>
+                            {{ card.shipping_address }}
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th class="text-right">Quantity</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="article in card.articles">
+                        <td class="col-sm-8 col-md-6">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{ article.name }}</h4>
+                                    <h5 class="media-heading">{{ article.description }}</h5>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-sm-1 col-md-1 text-right">{{ article.amount }}</td>
+                        <td class="col-sm-1 col-md-1 text-right"><strong>${{ article.total }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>  </td>
+                        <td><h5>Subtotal</h5></td>
+                        <td class="text-right"><h5><strong>${{ _.sumBy(card.articles, 'total') }}</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>  </td>
+                        <td><h5>Shipping</h5></td>
+                        <td class="text-right"><h5><strong>${{ card.shipping }}</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>  </td>
+                        <td><h3>Total</h3></td>
+                        <td class="text-right"><h3><strong>${{ _.sumBy(card.articles, 'total') + card.shipping }}</strong></h3></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            result: {"type": "purchases", "title": "my purchases", "created_at": "2018-08-11 15:05:32", "shopping_cards": [{"id": 1, "invoice_address": "Street 1 Berlin", "shipping_address": "Street 2 Berlin", "shipping": 5, "articles": [{"name": "Weed", "description": "Best quality, grams", "amount": 50, "total": 300}, {"name": "Knive", "description": "Stainless steel, piece", "amount": 1, "total": 55.2}]}]}
+        },
+        computed: {
+            groupedElements: function() {
+                return _.groupBy(this.result.elements, function (element) {
+                    return moment(element.datetime).format('MMMM Do YYYY');
+                });
+            }
+        }
+    })
+
+
+</script>
+
+</body>
+</html>

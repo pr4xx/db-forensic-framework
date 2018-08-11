@@ -7,6 +7,9 @@ from framework.analysis.chat.Chat import Chat
 from framework.analysis.chat.Conversation import Conversation
 from framework.analysis.chat.Message import Message
 from framework.analysis.chat.Participant import Participant
+from framework.analysis.purchases.Article import Article
+from framework.analysis.purchases.Purchases import Purchases
+from framework.analysis.purchases.ShoppingCard import ShoppingCard
 from framework.analysis.timeline.Timeline import Timeline
 from framework.analysis.timeline.TimelineElement import TimelineElement
 
@@ -56,16 +59,6 @@ def sync2(ctx):
 
     conversation = Conversation()
     conversation.add(Message(alice, datetime.now(), "222Hello Bob!"))
-    conversation.add(Message(alice, datetime.now(), "222Hello Bob!"))
-    conversation.add(Message(alice, datetime.now(), "222Hello Bob!"))
-    conversation.add(Message(alice, datetime.now(), "222Hello Bob!"))
-    conversation.add(Message(alice, datetime.now(), "222Hello Bob!"))
-    conversation.add(Message(alice, datetime.now(), "222Hello Bob!"))
-    conversation.add(Message(alice, datetime.now(), "222Hello Bob!"))
-    conversation.add(Message(alice, datetime.now(), "222Hello Bob!"))
-    conversation.add(Message(alice, datetime.now(), "222Hello Bob!"))
-    conversation.add(Message(alice, datetime.now(), "222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!222Hello Bob!"))
-
     conversation.add(Message(bob, datetime.now(), "222Hello Alice! How are you?"))
     conversation.add(Message(alice, datetime.now() + timedelta(minutes=5), "222I am fine!"))
     conversation.add(Message(oscar, datetime.now() + timedelta(minutes=7), "Hey there"))
@@ -74,3 +67,16 @@ def sync2(ctx):
     Core.instance.render(chat)
 
 
+@cli.command()
+@click.pass_context
+@db_session
+def sync3(ctx):
+    purchases = Purchases("my purchases")
+    card = ShoppingCard("Street 1 Berlin", "Street 2 Berlin", 5)
+    drugs = Article("Weed", "Best quality, grams", 50, 300)
+    weapons = Article("Knive", "Stainless steel, piece", 1, 55.2)
+    card.add(drugs)
+    card.add(weapons)
+    purchases.add(card)
+
+    Core.instance.render(purchases)

@@ -17,9 +17,9 @@ class ChatExcel(Export):
         index = 0
         for conversation in result['conversations']:
             index += 1
-            newWs = wb.create_sheet(title="Conversation " + str(index))
+            new_ws = wb.create_sheet(title="Conversation " + str(index))
             for message in conversation['messages']:
-                newWs.append([
+                new_ws.append([
                     message['participant']['name'],
                     message['datetime'],
                     message['content']
