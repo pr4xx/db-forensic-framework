@@ -9,15 +9,20 @@ class ChatExcel(Export):
         result = json.loads(result_json)
         wb = Workbook()
         ws = wb.active
+        ws.title = 'Overview'
         ws['A1'] = result['title']
         ws['B1'] = 'Created at:'
         ws['C1'] = result['created_at']
 
-        for element in result['elements']:
-            ws.append([
-                element['datetime'],
-                element['title'],
-                element['content']
-            ])
+        index = 0
+        for conversation in result['conversations']:
+            index += 1
+            newWs = wb.create_sheet(title="Conversation " + str(index))
+            for message in conversation['messages']:
+                newWs.append([
+                    message['participant']['name'],
+                    message['datetime'],
+                    message['content']
+                ])
 
         wb.save(output_path)
