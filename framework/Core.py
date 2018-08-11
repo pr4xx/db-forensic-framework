@@ -5,6 +5,9 @@ from framework.PluginManager import PluginManager
 from framework.analysis.timeline import Timeline
 from framework.analysis.timeline.excel.TimelineExcel import TimelineExcel
 from framework.analysis.timeline.html.TimelineHtml import TimelineHtml
+from framework.analysis.chat import Chat
+from framework.analysis.chat.excel.ChatExcel import ChatExcel
+from framework.analysis.chat.html.ChatHtml import ChatHtml
 
 
 class Core:
@@ -44,4 +47,10 @@ class Core:
                 exporter = TimelineHtml()
             if self.export == 'excel':
                 exporter = TimelineExcel()
+        if isinstance(result, Chat.Chat):
+            if self.export == 'html':
+                exporter = ChatHtml()
+            if self.export == 'excel':
+                exporter = ChatExcel()
         exporter.to_file(self.output, result_json)
+        print("Written " + self.output)
