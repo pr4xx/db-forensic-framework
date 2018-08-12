@@ -1,0 +1,16 @@
+[general]
+title = facebook-messenger
+description = Example plugin for facebook messenger.
+version = 0.1.0
+requires = 0.1.0
+
+[target]
+name = facebook-messenger
+min_version = 1.0.0
+max_version = 1.8.5
+sim_hash = 437378939070457518
+
+[author]
+name = Nico Zimmermann
+email = nico.zimmermann94@gmail.com
+website = http://www.itl-zimmermann.de

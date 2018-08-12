@@ -187,7 +187,7 @@ img{ max-width:100%;}
                                 <h5>{{ _.map(getParticipants(conversation), 'name').join(', ') }}
                                     <span class="chat_date">{{ _.last(conversation.messages).datetime }}</span>
                                 </h5>
-                                <p>{{ _.last(conversation.messages).content }}</p>
+                                <p>{{ _.last(conversation.messages).content.substring(0, 50) }}...</p>
                             </div>
                         </div>
                     </div>
