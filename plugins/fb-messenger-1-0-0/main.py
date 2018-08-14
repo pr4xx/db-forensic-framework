@@ -1,17 +1,11 @@
 import click
 from datetime import datetime
-from datetime import timedelta
 from pony.orm import *
 from framework.Core import Core
 from framework.analysis.chat.Chat import Chat
 from framework.analysis.chat.Conversation import Conversation
 from framework.analysis.chat.Message import Message as FrameworkMessage
 from framework.analysis.chat.Participant import Participant
-from framework.analysis.purchases.Article import Article
-from framework.analysis.purchases.Purchases import Purchases
-from framework.analysis.purchases.ShoppingCard import ShoppingCard
-from framework.analysis.timeline.Timeline import Timeline
-from framework.analysis.timeline.TimelineElement import TimelineElement
 
 # Entity definitions
 

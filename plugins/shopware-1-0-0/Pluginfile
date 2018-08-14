@@ -1,0 +1,16 @@
+[general]
+title = shopware
+description = Example plugin for shopware.
+version = 0.1.0
+requires = 0.1.0
+
+[target]
+name = shopware
+min_version = 1.0.0
+max_version = 1.8.5
+sim_hash = 13440072154136989
+
+[author]
+name = Nico Zimmermann
+email = nico.zimmermann94@gmail.com
+website = http://www.itl-zimmermann.de

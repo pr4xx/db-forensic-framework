@@ -57,7 +57,12 @@ class ConnectionManager:
         config = self.get_connection(name).config
         connection_type = config['type']
         if connection_type == 'mysql':
-            pass
+            host = config['host']
+            port = config['port']
+            database = config['database']
+            username = config['username']
+            password = config['password']
+            db.bind(provider='mysql', user=username, password=password, host=host, port=int(port), database=database)
         elif connection_type == 'sqlite':
             file = config['file']
             db.bind(provider='sqlite', filename='../' + file)
