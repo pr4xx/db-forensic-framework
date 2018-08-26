@@ -27,7 +27,7 @@ class Folder(Core.instance.db.Entity):
 @click.pass_context
 def cli(ctx):
     """ Sample plugin description. """
-    pass
+    Core.instance.db.generate_mapping()
 
 
 @cli.command()

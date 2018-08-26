@@ -85,7 +85,7 @@ class OrderDetail(Core.instance.db.Entity):
 @click.pass_context
 def cli(ctx):
     """ This plugin extracts chats and participants. """
-    pass
+    Core.instance.db.generate_mapping()
 
 
 @cli.command(name="users:list")

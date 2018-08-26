@@ -31,7 +31,6 @@ class Core:
         if connection_name is not None:
             self.connection = self.connection_manager.get_connection(connection_name)
             self.connection_manager.bind_db(self.db, connection_name)
-            self.db.generate_mapping()
         if export_type is not None:
             self.export = export_type
         if output_path is not None:
