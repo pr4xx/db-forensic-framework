@@ -8,6 +8,7 @@ click = "*"
 sqlalchemy = "*"
 changanya = "*"
 pymysql = "*"
+pony = "*"
 
 [dev-packages]
 
