@@ -9,6 +9,7 @@ sqlalchemy = "*"
 changanya = "*"
 pymysql = "*"
 pony = "*"
+openpyxl = "*"
 
 [dev-packages]
 
