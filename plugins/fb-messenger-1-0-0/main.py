@@ -10,22 +10,22 @@ from framework.analysis.chat.Participant import Participant
 # Entity definitions
 
 
-class User(Core.instance.db.Entity):
+class F_User(Core.instance.db.Entity):
     _table_ = "thread_users"
     user_key = PrimaryKey(str)
     name = Required(str)
 
 
-class Thread(Core.instance.db.Entity):
+class F_Thread(Core.instance.db.Entity):
     _table_ = "threads"
     thread_key = PrimaryKey(str)
-    messages = Set("Message", reverse="thread")
+    messages = Set("F_Message", reverse="thread")
 
 
-class Message(Core.instance.db.Entity):
+class F_Message(Core.instance.db.Entity):
     _table_ = "messages"
     msg_id = PrimaryKey(str)
-    thread = Required("Thread", reverse="messages", column="thread_key")
+    thread = Required("F_Thread", reverse="messages", column="thread_key")
     sender = Optional(Json)
     text = Optional(str)
     timestamp_ms = Required(int)
@@ -50,7 +50,7 @@ def extract(ctx):
 
     # Fetch all users and key by id
     users = {}
-    db_users = select(u for u in User)[:]
+    db_users = select(u for u in F_User)[:]
     for user in db_users:
         users[user.user_key] = {
             "db_user": user,
@@ -58,11 +58,11 @@ def extract(ctx):
         }
 
     # Fetch all threads
-    threads = select(t for t in Thread)[:]
+    threads = select(t for t in F_Thread)[:]
     for thread in threads:
         conversation = Conversation()
         # Fetch all messages of this thread
-        messages = thread.messages.order_by(Message.timestamp_ms)
+        messages = thread.messages.order_by(F_Message.timestamp_ms)
         for message in messages:
             if not message.sender:
                 continue

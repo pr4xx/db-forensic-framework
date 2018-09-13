@@ -16,35 +16,35 @@ from framework.analysis.timeline.TimelineElement import TimelineElement
 # Entity definitions
 
 
-class User(Core.instance.db.Entity):
+class SW_User(Core.instance.db.Entity):
     _table_ = "s_user"
     id = PrimaryKey(int)
     email = Required(str)
     firstname = Required(str)
     lastname = Required(str)
-    orders = Set("Order", reverse="user")
+    orders = Set("SW_Order", reverse="user")
 
 
-class Order(Core.instance.db.Entity):
+class SW_Order(Core.instance.db.Entity):
     _table_ = "s_order"
     id = PrimaryKey(int)
-    user = Required("User", reverse="orders", column="userID")
+    user = Required("SW_User", reverse="orders", column="userID")
     ordertime = Required(str)
     invoice_shipping = Required(str)
-    billing_address = Optional("BillingAddress")
-    shipping_address = Optional("ShippingAddress")
-    order_details = Set("OrderDetail", reverse="order")
+    billing_address = Optional("SW_BillingAddress")
+    shipping_address = Optional("SW_ShippingAddress")
+    order_details = Set("SW_OrderDetail", reverse="order")
 
 
-class Article(Core.instance.db.Entity):
+class SW_Article(Core.instance.db.Entity):
     _table_ = "s_articles"
     id = PrimaryKey(int)
     name = Required(str)
     description = Optional(str)
-    order_details = Set("OrderDetail", reverse="article")
+    order_details = Set("SW_OrderDetail", reverse="article")
 
 
-class BillingAddress(Core.instance.db.Entity):
+class SW_BillingAddress(Core.instance.db.Entity):
     _table_ = "s_order_billingaddress"
     id = PrimaryKey(int)
     firstname = Required(str)
@@ -53,10 +53,10 @@ class BillingAddress(Core.instance.db.Entity):
     zipcode = Required(str)
     city = Required(str)
     phone = Optional(str)
-    order = Optional("Order", column="orderID")
+    order = Optional("SW_Order", column="orderID")
 
 
-class ShippingAddress(Core.instance.db.Entity):
+class SW_ShippingAddress(Core.instance.db.Entity):
     _table_ = "s_order_shippingaddress"
     id = PrimaryKey(int)
     firstname = Required(str)
@@ -65,18 +65,18 @@ class ShippingAddress(Core.instance.db.Entity):
     zipcode = Required(str)
     city = Required(str)
     phone = Optional(str)
-    order = Optional("Order", column="orderID")
+    order = Optional("SW_Order", column="orderID")
 
 
-class OrderDetail(Core.instance.db.Entity):
+class SW_OrderDetail(Core.instance.db.Entity):
     _table_ = "s_order_details"
     id = PrimaryKey(int)
     name = Required(str)
     quantity = Required(str)
     price = Required(str)
     unit = Optional(str)
-    order = Required("Order", reverse="order_details", column="orderID")
-    article = Required("Article", reverse="order_details", column="articleID")
+    order = Required("SW_Order", reverse="order_details", column="orderID")
+    article = Required("SW_Article", reverse="order_details", column="articleID")
 
 # Command definitions
 
@@ -93,7 +93,7 @@ def cli(ctx):
 @db_session
 def list_users(ctx):
     """ Lists all users. """
-    users = select(u for u in User)[:]
+    users = select(u for u in SW_User)[:]
     for user in users:
         print({
             "id": user.id,
@@ -109,7 +109,7 @@ def list_users(ctx):
 @db_session
 def extract(ctx, id):
     """ Generates orders for a given user id. """
-    user = User[id]
+    user = SW_User[id]
     purchases = Purchases("Purchases of " + user.firstname + " " + user.lastname)
     orders = user.orders
     for order in orders:
@@ -124,7 +124,7 @@ def extract(ctx, id):
                            + order.billing_address.zipcode + " "\
                            + order.billing_address.city
         card = ShoppingCard(invoice_address, shipping_address, order.invoice_shipping)
-        details = order.order_details.order_by(OrderDetail.id)
+        details = order.order_details.order_by(SW_OrderDetail.id)
         for detail in details:
             article = FrameworkArticle(detail.name, detail.article.description + ", " + detail.unit, detail.quantity, detail.price)
             card.add(article)

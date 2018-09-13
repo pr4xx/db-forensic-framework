@@ -16,7 +16,7 @@ from framework.analysis.timeline.TimelineElement import TimelineElement
 # Entity definitions
 
 
-class Folder(Core.instance.db.Entity):
+class E_Folder(Core.instance.db.Entity):
     _table_ = "folders"
     thread_key = PrimaryKey(str)
 
