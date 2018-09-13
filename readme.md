@@ -26,9 +26,7 @@ Make sure you have `python 3.7`, `pip` and `pipenv` installed. Clone this reposi
 
 ## Examples
 
-Take a look at the `plugins` directory. Example databases can be downloaded here: [databases.zip
-](https://www.file-upload.net/download-13313754/databases.zip.html
-)
+Take a look at the `plugins` directory. Example databases can be downloaded here: [databases.zip](https://files.fm/u/44s6dceq)
 
 ## Available Commands
 
