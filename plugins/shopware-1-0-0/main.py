@@ -84,7 +84,7 @@ class SW_OrderDetail(Core.instance.db.Entity):
 @click.group()
 @click.pass_context
 def cli(ctx):
-    """ This plugin extracts chats and participants. """
+    """ This plugin extracts purchases. """
     Core.instance.db.generate_mapping()
 
 
